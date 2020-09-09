@@ -27,13 +27,16 @@
     "test": "jest --watch packages",
     "test:run": "jest"
   },
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "source": "index.js",
   "typings": "types/index.d.ts",
   "files": [
     "dist",
     "types"
   ],
   "dependencies": {
-    "tdast-types": "^0.1.1",
+    "tdast-types": "^0.1.2",
     "unist-builder": "^2.0.3"
   },
   "devDependencies": {
