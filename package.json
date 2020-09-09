@@ -1,0 +1,70 @@
+{
+  "name": "tdastscript",
+  "version": "0.1.0",
+  "description": "utility to create tdast trees",
+  "license": "MIT",
+  "homepage": "https://github.com/tdast/tdastscript",
+  "repository": "https://github.com/tdast/tdastscript",
+  "bugs": "https://github.com/tdast/tdastscript/issues",
+  "author": "Chris Zhou <chrisrzhou@pm.me> (https://chrisrzhou.io)",
+  "keywords": [
+    "tdast",
+    "script",
+    "tabular",
+    "data",
+    "ast",
+    "unist",
+    "util"
+  ],
+  "scripts": {
+    "bootstrap": "npm install",
+    "build": "microbundle",
+    "clean": "rm -rf dist",
+    "dev": "microbundle watch",
+    "lint": "xo --fix; tsc",
+    "prepare": "npm run clean; npm run build",
+    "release": "standard-version -s --infile changelog.md",
+    "test": "jest --watch packages",
+    "test:run": "jest"
+  },
+  "typings": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "dependencies": {
+    "tdast-types": "^0.1.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.11.5",
+    "@types/jest": "^26.0.9",
+    "babel-jest": "^26.2.2",
+    "husky": "^4.3.0",
+    "jest": "^26.4.2",
+    "microbundle": "^0.12.3",
+    "standard-version": "^9.0.0",
+    "typescript": "^4.0.2",
+    "xo": "^0.33.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm prepare; npm run lint; npm run test:run"
+    }
+  },
+  "prettier": {
+    "bracketSpacing": true,
+    "jsxBracketSameLine": true,
+    "trailingComma": "all",
+    "useTabs": false
+  },
+  "xo": {
+    "env": [
+      "jest"
+    ],
+    "prettier": true,
+    "rules": {
+      "capitalized-comments": "off",
+      "padding-line-between-statements": "off"
+    }
+  }
+}
