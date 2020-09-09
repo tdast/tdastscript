@@ -90,6 +90,10 @@ describe(td, () => {
 
   describe('row', () => {
     it('creates row node with whitelisted properties (data, index, position)', () => {
+      expect(td('row')).toEqual({
+        type: 'row',
+        children: [],
+      });
       expect(
         td('row', {
           badProperty: 'badProperty',
@@ -161,6 +165,10 @@ describe(td, () => {
 
   describe('table', () => {
     it('creates table node with whitelisted properties (data, position)', () => {
+      expect(td('table')).toEqual({
+        type: 'table',
+        children: [],
+      });
       expect(
         td('table', {
           badProperty: 'badProperty',
@@ -205,7 +213,7 @@ describe(td, () => {
     });
   });
 
-  describe('is composible', () => {
+  describe('is composable', () => {
     it('creates a valid tree', () => {
       const tdast = td('table', [
         td('row', [

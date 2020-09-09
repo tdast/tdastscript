@@ -6,11 +6,13 @@ type Node = Cell | Column | Row | Table;
 /** Node types of tdast nodes. */
 type NodeType = 'cell' | 'column' | 'row' | 'table';
 
-/** Child nodes can be actual nodes or string alias representing Cell nodes */
+/** Child nodes can be actual nodes or string values representing Cell nodes */
 type Children = Node[] | string[];
 
+/** Node properties in object syntax */
 type Properties = Record<string, any>;
 
+/** Alias for loosely-typed value */
 type Value = any;
 
 /**
@@ -18,9 +20,9 @@ type Value = any;
  **/
 export default function td(
   /** Node type */
-  arg1?: NodeType,
-  /** Accept either children, properties, or value */
-  arg2?: Children | Properties | Value,
-  /** Children nodes */
-  arg3?: Children,
+  type?: NodeType,
+  /** Optional node properties */
+  properties?: Properties,
+  /** Children nodes (for Parent nodes) or value (for Literal nodes) */
+  childrenOrValue?: Children | Value,
 ): Node;
