@@ -30,11 +30,11 @@ describe(td, () => {
       });
     });
 
-    it('creates cell node with whitelisted properties (data, position)', () => {
+    it('creates cell node with whitelisted properties (data, position, value)', () => {
       expect(
         td('cell', {
-          badProperty: 'a',
-          children: ['a', 'b'],
+          badProperty: 'badProperty',
+          children: ['cell1', 'cell2'],
           data: { fieldA: 'valueA', fieldB: true },
           position: { start: {}, end: {} },
           value: 'test',
@@ -64,11 +64,11 @@ describe(td, () => {
       });
     });
 
-    it('creates column node with whitelisted properties (data, dataType, index, label, position)', () => {
+    it('creates column node with whitelisted properties (data, dataType, index, label, position, value)', () => {
       expect(
         td('column', {
-          badProperty: 'a',
-          children: ['a', 'b'],
+          badProperty: 'badProperty',
+          children: ['column1', 'column2'],
           data: { fieldA: 'valueA', fieldB: true },
           dataType: 'percentage',
           index: 5,
@@ -92,8 +92,8 @@ describe(td, () => {
     it('creates row node with whitelisted properties (data, index, position)', () => {
       expect(
         td('row', {
-          badProperty: 'a',
-          children: ['a', 'b'],
+          badProperty: 'badProperty',
+          children: ['cell1', 'cell2'],
           data: { fieldA: 'valueA', fieldB: true },
           index: 5,
           position: { start: {}, end: {} },
@@ -109,51 +109,51 @@ describe(td, () => {
     });
 
     it('creates row node with valid cell/column children', () => {
-      expect(td('row', ['a', 'b'])).toEqual({
+      expect(td('row', ['cell1', 'cell2'])).toEqual({
         type: 'row',
         children: [
-          { type: 'cell', value: 'a' },
-          { type: 'cell', value: 'b' },
+          { type: 'cell', columnIndex: 0, value: 'cell1' },
+          { type: 'cell', columnIndex: 1, value: 'cell2' },
         ],
       });
       expect(
         td('row', [
-          { type: 'cell', value: 'a' },
-          { type: 'cell', value: 'b' },
+          { type: 'cell', value: 'cell1' },
+          { type: 'cell', value: 'cell2' },
         ]),
       ).toEqual({
         type: 'row',
         children: [
-          { type: 'cell', value: 'a' },
-          { type: 'cell', value: 'b' },
+          { type: 'cell', columnIndex: 0, value: 'cell1' },
+          { type: 'cell', columnIndex: 1, value: 'cell2' },
         ],
       });
       expect(
         td('row', [
-          { type: 'column', value: 'a' },
-          { type: 'column', value: 'b' },
+          { type: 'column', value: 'column1' },
+          { type: 'column', value: 'column2' },
         ]),
       ).toEqual({
         type: 'row',
         children: [
-          { type: 'column', index: 0, value: 'a' },
-          { type: 'column', index: 1, value: 'b' },
+          { type: 'column', index: 0, value: 'column1' },
+          { type: 'column', index: 1, value: 'column2' },
         ],
       });
       expect(
         td('row', [
           { type: 'invalid type' },
-          'a',
-          { type: 'cell', value: 'b' },
+          'cell1',
+          { type: 'cell', value: 'cell2' },
           { type: 'invalid type' },
           'c',
         ]),
       ).toEqual({
         type: 'row',
         children: [
-          { type: 'cell', value: 'a' },
-          { type: 'cell', value: 'b' },
-          { type: 'cell', value: 'c' },
+          { type: 'cell', columnIndex: 0, value: 'cell1' },
+          { type: 'cell', columnIndex: 1, value: 'cell2' },
+          { type: 'cell', columnIndex: 2, value: 'c' },
         ],
       });
     });
@@ -163,8 +163,8 @@ describe(td, () => {
     it('creates table node with whitelisted properties (data, position)', () => {
       expect(
         td('table', {
-          badProperty: 'a',
-          children: ['a', 'b'],
+          badProperty: 'badProperty',
+          children: ['row1', 'row2'],
           data: { fieldA: 'valueA', fieldB: true },
           position: { start: {}, end: {} },
           value: 'test',
@@ -178,7 +178,7 @@ describe(td, () => {
     });
 
     it('creates table node with valid row children', () => {
-      expect(td('table', ['a', 'b'])).toEqual({
+      expect(td('table', ['row1', 'row2'])).toEqual({
         type: 'table',
         children: [],
       });
@@ -186,7 +186,7 @@ describe(td, () => {
         td('table', [
           { type: 'row', children: [] },
           { type: 'invalid type' },
-          { type: 'row', children: ['a', 'b'] },
+          { type: 'row', children: ['cell1', 'cell2'] },
         ]),
       ).toEqual({
         type: 'table',
@@ -196,8 +196,8 @@ describe(td, () => {
             type: 'row',
             index: 1,
             children: [
-              { type: 'cell', value: 'a' },
-              { type: 'cell', value: 'b' },
+              { type: 'cell', columnIndex: 0, rowIndex: 1, value: 'cell1' },
+              { type: 'cell', columnIndex: 1, rowIndex: 1, value: 'cell2' },
             ],
           },
         ],
@@ -213,7 +213,7 @@ describe(td, () => {
           td('column', 2),
           td('column', {
             value: 3,
-            badProperty: 'a',
+            badProperty: 'badProperty',
             dataType: 'percentage',
             data: { fieldA: 'valueA', fieldB: true },
             label: 'Column 3',
@@ -226,7 +226,7 @@ describe(td, () => {
           2,
           td('cell', {
             value: 3,
-            badProperty: 'a',
+            badProperty: 'badProperty',
             dataType: 'percentage',
             data: { fieldA: 'valueA', fieldB: true },
             label: 'Column 3',
@@ -238,7 +238,7 @@ describe(td, () => {
           'row',
           {
             value: 3,
-            badProperty: 'a',
+            badProperty: 'badProperty',
             dataType: 'percentage',
             data: { fieldA: 'valueA', fieldB: true },
             label: 'Column 3',
@@ -286,20 +286,28 @@ describe(td, () => {
             children: [
               {
                 type: 'cell',
+                columnIndex: 0,
+                rowIndex: 1,
                 value: 'row1-cell0',
               },
               {
                 type: 'cell',
+                columnIndex: 1,
+                rowIndex: 1,
                 value: 2,
               },
               {
                 type: 'cell',
+                columnIndex: 2,
+                rowIndex: 1,
                 value: 3,
                 data: { fieldA: 'valueA', fieldB: true },
                 position: { start: {}, end: {} },
               },
               {
                 type: 'cell',
+                columnIndex: 3,
+                rowIndex: 1,
                 value: null,
               },
             ],
@@ -312,18 +320,26 @@ describe(td, () => {
             children: [
               {
                 type: 'cell',
+                columnIndex: 0,
+                rowIndex: 2,
                 value: 'row2-cell0',
               },
               {
                 type: 'cell',
+                columnIndex: 1,
+                rowIndex: 2,
                 value: 2,
               },
               {
                 type: 'cell',
+                columnIndex: 2,
+                rowIndex: 2,
                 value: 'row2-cell3',
               },
               {
                 type: 'cell',
+                columnIndex: 3,
+                rowIndex: 2,
                 value: null,
               },
             ],
