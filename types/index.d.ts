@@ -20,9 +20,9 @@ type Value = any;
  **/
 export default function td(
   /** Node type */
-  type?: NodeType,
-  /** Optional node properties */
-  properties?: Properties,
-  /** Children nodes (for Parent nodes) or value (for Literal nodes) */
-  childrenOrValue?: Children | Value,
+  arg1?: NodeType,
+  /** Either node properties, children nodes or value */
+  arg2?: Properties | Children | Value,
+  /** children nodes or value */
+  arg3?: Children | Value,
 ): Node;

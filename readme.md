@@ -98,11 +98,11 @@ expect(tdast).toEqual({
 ```ts
 function td(
   /** Node type */
-  type?: NodeType,
-  /** Optional node properties */
-  properties?: Properties,
-  /** Children nodes (for Parent nodes) or value (for Literal nodes) */
-  childrenOrValue?: Children | Value,
+  arg1?: NodeType,
+  /** Either node properties, children nodes or value */
+  arg2?: Properties | Children | Value,
+  /** children nodes or value */
+  arg3?: Children | Value,,
 ): Node;
 ```
 
@@ -135,7 +135,7 @@ expect(td('column')).toEqual({
 });
 ```
 
-For **Literal** nodes, such as `Cell` and `Column`, if the `properties` argument is skipped and only the `value` argument is provided, create the nodes:
+For **Literal** nodes, such as `Cell` and `Column`, if the second argument is skipped and only the third argument is provided as singleton values, create literal nodes:
 
 ```js
 expect(td('cell', 'cell1')).toEqual({
@@ -149,7 +149,7 @@ expect(td('column', 'column1')).toEqual({
 });
 ```
 
-For **Parent** nodes, such as `Table` and `Row`, if the `properties` argument is skipped and only the `children` argument is provided, create the child nodes:
+For **Parent** nodes, such as `Table` and `Row`, if the second argument is skipped and only the the third argument is provided as child nodes, create parent nodes:
 
 ```js
 expect(td('table', [
@@ -175,7 +175,7 @@ expect(td('row', [
 });
 ```
 
-If the `properties` argument is not skipped, attach the properties to the specified nodes.  Note that `tdastscript` will only attach properties specified by the node's interface.  Refer to the formal [type definitions][type-definitions] for details.
+If the second argument is not skipped, attach the properties to the specified nodes.  Note that `tdastscript` will only attach properties specified by the node's interface.  Refer to the formal [type definitions][type-definitions] for details.
 
 ```js
 expect(td('table', { 
